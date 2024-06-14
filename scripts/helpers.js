@@ -3538,8 +3538,8 @@ async function appendTweet(t, timelineContainer, options = {}) {
 
                         let ts = new Date(t.created_at).toISOString().split("T")[0];
                         let extension = url.pathname.split('.').pop();
-                        let _index = t.extended_entities.media.length > 1 ? "_"+(index+1) : "";
-                        let filename = `${t.user.screen_name}_${ts}_${t.id_str}${_index}.${extension}`;
+                        let _index = t.extended_entities.media.length > 1 ? "-"+(index) : "";
+                        let filename = `@${t.user.screen_name}-${t.id_str}${_index}.${extension}`;
                         a.download = filename;
 
                         a.click();
