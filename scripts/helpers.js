@@ -3592,7 +3592,8 @@ async function appendTweet(t, timelineContainer, options = {}) {
                             mde.innerText = '';
                             let a = document.createElement('a');
                             a.href = URL.createObjectURL(blob);
-                            a.download = `${t.id_str}.gif`;
+                            let _index = t.extended_entities.media.length > 1 ? "-"+(n) : "";
+                            a.download = `@${t.user.screen_name}-${t.id_str}${_index}.gif`;
                             document.body.append(a);
                             a.click();
                             a.remove();
