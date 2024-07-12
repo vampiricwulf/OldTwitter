@@ -485,6 +485,7 @@ let userDataFunction = async user => {
         root.style.setProperty('--birthday-icon', '"\\f092"');
         root.style.setProperty('--joined-icon', '"\\f203"');
     }
+    console.log(vars);
     if(vars.heartsNotStars) {
         root.style.setProperty('--favorite-icon-content', '"\\f148"');
         root.style.setProperty('--favorite-icon-content-notif', '"\\f015"');
@@ -3007,7 +3008,7 @@ setInterval(() => {
                 userDataFunction(u);
             });
         }
-    }, 1750);
+    }, 0); // fixes a bug where user info doesn't load on the profile page occasionally
     setTimeout(() => {
         let version = document.getElementById('oldtwitter-version');
         let version2 = document.getElementById('oldtwitter-version-left');

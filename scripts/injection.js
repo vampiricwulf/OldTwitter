@@ -533,6 +533,7 @@ let page = realPath === "" ? pages[0] : pages.find(p => (!p.exclude || !p.exclud
         isDarkModeEnabled = true;
         switchDarkMode(true);
     }
+    document.querySelector(":root").style.setProperty('--transition-profile-banner', vars.transitionProfileBanner ? '.1s' : '0s');
     if(vars.systemDarkMode) {
         var matchMediaDark = window.matchMedia('(prefers-color-scheme: dark)');
         var matchMediaLight = window.matchMedia('(prefers-color-scheme: light)');
@@ -675,6 +676,9 @@ let page = realPath === "" ? pages[0] : pages.find(p => (!p.exclude || !p.exclud
     }
 
     document.documentElement.innerHTML = html;
+    let root = document.getElementById("fake-react-root");
+    if (!root) root = document.getElementById("react-root");
+    if (root && root.style) root.style.paddingLeft = 'calc(100vw - 100%)'
     document.body.classList.add('body-old-ui');
 
     blockingObserver.disconnect();
