@@ -866,10 +866,12 @@ class TweetViewer {
             if(this.linkColors[t.user.id_str]) {
                 let sc = makeSeeableColor(this.linkColors[t.user.id_str]);
                 tweet.style.setProperty('--link-color', sc);
+                if (vars.alwaysShowLinkColor) tweet.classList.add('colour');
             } else {
                 if(t.user.profile_link_color && t.user.profile_link_color !== '1DA1F2') {
                     let sc = makeSeeableColor(t.user.profile_link_color);
                     tweet.style.setProperty('--link-color', sc);
+                    if (vars.alwaysShowLinkColor) tweet.classList.add('colour');
                 }
             }
         }
@@ -964,6 +966,7 @@ class TweetViewer {
                 //else this is not reply but mention
             });
         }
+        console.log(t);
         tweet.innerHTML = html`
             <div class="tweet-top" hidden></div>
             <a class="tweet-avatar-link" href="/${t.user.screen_name}"><img onerror="this.src = '${`${vars.useOldDefaultProfileImage ? chrome.runtime.getURL(`images/default_profile_images/default_profile_bigger.png`) : 'https://abs.twimg.com/sticky/default_profile_images/default_profile_bigger.png'}`}'" src="${`${(t.user.default_profile_image && vars.useOldDefaultProfileImage) ? chrome.runtime.getURL(`images/default_profile_images/default_profile_${Number(t.user.id_str) % 7}_normal.png`): t.user.profile_image_url_https}`.replace("_normal.", "_bigger.")}" alt="${t.user.name}" class="tweet-avatar" width="48" height="48"></a>
@@ -2455,8 +2458,28 @@ class TweetViewer {
                     downloading = false;
                     let a = document.createElement('a');
                     a.href = URL.createObjectURL(blob);
-                    a.download = media.type === 'photo' ? media.media_url_https.split('/').pop() : media.video_info.variants[0].url.split('/').pop();
-                    a.download = a.download.split('?')[0];
+                    
+                    let ts = new Date(t.created_at).toISOString().split("T")[0];
+                    let extension = url.split('.').pop();
+                    //let _index = t.extended_entities.media.length > 1 ? "_"+(index+1) : "";
+                    let _index = "";
+                    let filename = `${t.user.screen_name}_${ts}_${t.id_str}${_index}.${extension}`;
+                    let filename_template = vars.customDownloadTemplate;
+
+                    // use the filename from the user's custom download template, if any
+                    if(filename_template && (filename_template.length > 0)) {
+                        const filesave_map = {
+                            "user_screen_name": t.user.screen_name,
+                            "user_name": t.user.name,
+                            "extension": extension,
+                            "timestamp": ts,
+                            "id": t.id_str,
+                            "index": _index
+                        };
+                        filename = filename_template.replace(/\{([\w]+)\}/g, (_, key) => filesave_map[key]);
+                    }
+
+                    a.download = filename;
                     a.click();
                     a.remove();
                 }).catch(e => {
