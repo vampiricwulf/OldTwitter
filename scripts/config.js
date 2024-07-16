@@ -20,7 +20,7 @@ let vars;
 let varsResolve, varsPromise = new Promise(resolve => varsResolve = resolve);
 async function loadVars() { 
     vars = await new Promise(resolve => {
-        chrome.storage.sync.get(['linkColor', 'font', 'heartsNotStars', 'linkColorsInTL', 'enableTwemoji', 'chronologicalTL', 
+        chrome.storage.sync.get(['linkColor', 'font', 'heartsNotStars', 'linkColorsInTL', 'alwaysShowLinkColor', 'enableTwemoji', 'chronologicalTL', 
             'timelineType', 'showTopicTweets', 'darkMode', 'disableHotkeys', 'customCSS', 'customCSSVariables', 'savePreferredQuality',
             'noBigFont', 'language', 'autoplayVideos', 'displaySensitiveContent', 'displaySensitiveContentMoved', 'volume', 'timeMode',
             'showOriginalImages', 'pitchBlack', 'seeTweetViews', 'autotranslateProfiles', 'roundAvatars', 'twitterBlueCheckmarks',
@@ -32,13 +32,19 @@ async function loadVars() {
             'acknowledgedCustomizationButton', 'modernUI', 'showExactValues', 'hideTimelineTypes', 'autotranslateLanguages', 
             'autotranslationMode', 'muteVideos', 'dontPauseVideos', 'showUserPreviewsOnMobile', 'systemDarkMode', 'localizeDigit',
             'disableRetweetHotkey', 'disableLikeHotkey', 'disableFindHotkey', 'extensionCompatibilityMode', 'disableDataSaver', 'disableAcceptType',
-            'showUserFollowerCountsInLists', 'showQuoteCount', 'hideUnfollowersPage', 'transitionProfileBanner'
+            'showUserFollowerCountsInLists', 'showQuoteCount', 'hideUnfollowersPage', 'transitionProfileBanner', 'customDownloadTemplate'
         ], data => {
             // default variables
             if(typeof(data.linkColorsInTL) !== 'boolean') {
                 data.linkColorsInTL = true;
                 chrome.storage.sync.set({
                     linkColorsInTL: true
+                }, () => {});
+            }
+            if (typeof(data.alwaysShowLinkColor) !== 'boolean') {
+                data.alwaysShowLinkColor = false;
+                chrome.storage.sync.set({
+                    alwaysShowLinkColor: false
                 }, () => {});
             }
             if(typeof(data.enableTwemoji) !== 'boolean') {
@@ -75,6 +81,12 @@ async function loadVars() {
                 data.customCSSVariables = '';
                 chrome.storage.sync.set({
                     customCSSVariables: ''
+                }, () => {});
+            }
+            if(typeof(data.customDownloadTemplate) !== 'string') {
+                data.customDownloadTemplate = '';
+                chrome.storage.sync.set({
+                    customDownloadTemplate: ''
                 }, () => {});
             }
             if(typeof(data.copyLinksAs) !== 'string') {

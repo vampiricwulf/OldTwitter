@@ -256,7 +256,13 @@
                         <input type="checkbox" id="modern-ui-switch"> <label for="modern-ui-switch">__MSG_modern_ui__</label>
                     </div>
                     <div class="setting">
+                        <input type="checkbox" id="old-style-suspensions"> <label for="old-style-suspensions">__MSG_old_style_suspensions__</label>
+                    </div>
+                    <div class="setting">
                         <input type="checkbox" id="link-colors-in-tl"> <label for="link-colors-in-tl">__MSG_show_colors_in_timeline__</label>
+                    </div>
+                    <div class="setting">
+                        <input type="checkbox" id="always-show-link-color"> <label for="always-show-link-color">__MSG_always_show_link_color__</label>
                     </div>
                     <div class="setting">
                         <input type="checkbox" id="no-big-font"> <label for="no-big-font">__MSG_no_big_font__</label>
@@ -392,6 +398,20 @@
                     </div>
                     <button class="nice-button" id="custom-css-save">__MSG_save_css__</button>
                     <br>
+                    <hr>
+                    <h1>__MSG_custom_downloadtemplate__</h1><br>
+                    <span>__MSG_custom_downloadtemplate_text__</span><br>
+                    <br><span>__MSG_custom_downloadtemplate_hintName1__</span>
+                    <br><span>__MSG_custom_downloadtemplate_hintName2__</span>
+                    <br><span>__MSG_custom_downloadtemplate_hintTime__</span>
+                    <br><span>__MSG_custom_downloadtemplate_hintExtension__</span>
+                    <br><span>__MSG_custom_downloadtemplate_hintID__</span>
+                    <br><span>__MSG_custom_downloadtemplate_hintIndex__</span>
+                    <br><br>
+                    <div class="setting">
+                        <input type="text" style="width: 550px;" id="custom-download" placeholder="{user_screen_name}_{timestamp}_{id}{index}.{extension}"></input>
+                    </div>
+                    <button class="nice-button" id="custom-download-save">__MSG_save_downloadtemplate__</button>
                     <hr>
                     <h1>__MSG_advanced_options__</h1><br>
                     <div class="setting" id="advanced-settings">
