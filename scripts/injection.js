@@ -166,7 +166,7 @@ const TRANSLATORS = {
         ["AlexSem", "/AlexSem5399"]
     ],
     "tl": ["Eurasian", "/NotPROxV"],
-    "lv": ["yourfriend", "https://3.141.lv/"],
+    "lv": ["sophie", "https://sad.ovh/"],
     "he": [
         ["ugh"],
         ["kriterin", "/kriterin"]
@@ -721,6 +721,21 @@ let page = realPath === "" ? pages[0] : pages.find(p => (!p.exclude || !p.exclud
     if(document.querySelector('.t-wrap')) {
         document.querySelector('.t-wrap').remove();
     }
+
+    // viewer.js
+    let touchStartTime = 0;
+    document.addEventListener("touchstart", e => {
+        if(e.target.className !== 'viewer-canvas') return;
+        touchStartTime = Date.now();
+    }, { passive: true });
+    document.addEventListener("touchend", e => {
+        if(e.target.className !== 'viewer-canvas') return;
+        if(Date.now() - touchStartTime < 150) {
+            let viewerContainer = e.target.closest('.viewer-container');
+            viewerContainer.querySelector('.viewer-close').click();
+            console.log('close');
+        }
+    }, { passive: false });
 
     chrome.runtime.sendMessage({
         action: "inject",
