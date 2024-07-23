@@ -1732,10 +1732,10 @@ async function renderProfile() {
             renderLists();
         });
         document.getElementById('profile-settings-share').addEventListener('click', async () => {
-            navigator.share({ url: `/${pageUser.screen_name}` });
+            navigator.share({ url: `https://${location.hostname}/${pageUser.screen_name}` });
         });
         document.getElementById('profile-settings-copy').addEventListener('click', async () => {
-            navigator.clipboard.writeText(`/${pageUser.screen_name}`);
+            navigator.clipboard.writeText(`https://${location.hostname}/${pageUser.screen_name}`);
         });
         if(document.getElementById('profile-settings-copy-id')) document.getElementById('profile-settings-copy-id').addEventListener('click', async () => {
             navigator.clipboard.writeText(pageUser.id_str);
@@ -1775,8 +1775,8 @@ async function renderProfile() {
         let url = document.createElement('a');
         url.classList.add('profile-additional-thing', 'profile-additional-url');
         let realUrl = pageUser.entities.url.urls[0];
-        url.innerText = realUrl.display_url;
-        url.href = realUrl.expanded_url;
+        url.innerText = realUrl.display_url || realUrl.url;
+        url.href = realUrl.expanded_url || realUrl.url;
         if(!url.href.startsWith('/')) url.target = "_blank";
         additionalInfo.appendChild(url);
     }
