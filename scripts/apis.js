@@ -1524,7 +1524,7 @@ const API = {
             return new Promise((resolve, reject) => {
                 fetch(`https://api.${location.hostname}/1.1/users/show.json?${byId ? `user_id=${val}` : `screen_name=${val}`}`, {
                     headers: {
-                        "authorization": OLDTWITTER_CONFIG.public_token,
+                        "authorization": OLDTWITTER_CONFIG.oauth_key,
                         "x-csrf-token": OLDTWITTER_CONFIG.csrf,
                         "x-twitter-auth-type": "OAuth2Session",
                         "x-twitter-client-language": window.LANGUAGE ? window.LANGUAGE : navigator.language ? navigator.language : "en"
@@ -1767,7 +1767,7 @@ const API = {
                         if (data.errors && data.errors[0].code === 32) {
                             return reject("Not logged in");
                         }
-                        if (data.errors && data.errors[0]) {
+                        if (data.errors && data.errors[0] && !data.data?.user?.result?.timeline_v2?.timeline?.instructions) {
                             if(data.errors[0].code === 88 && typeof useDiffKey === 'undefined') {
                                 localStorage.hitRateLimit = Date.now() + 1000 * 60 * 10;
                                 return API.user.getTweetsV2(id, cursor, replies, true).then(resolve).catch(reject);
