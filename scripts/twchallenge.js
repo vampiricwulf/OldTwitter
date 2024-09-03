@@ -1,24 +1,35 @@
+let solverIframe;
 let solveId = 0;
 let solveCallbacks = {};
 let solveQueue = []
 let solverReady = false;
 let solverErrored = false;
+let sentData = false;
 
-let solverIframe = document.createElement('iframe');
-solverIframe.style.display = 'none';
-solverIframe.src = chrome.runtime.getURL(`sandbox.html`);
-let injectedBody = document.getElementById('injected-body');
-if(injectedBody) {
-    injectedBody.appendChild(solverIframe);
-} else {
-    let int = setInterval(() => {
-        let injectedBody = document.getElementById('injected-body');
-        if(injectedBody) {
-            injectedBody.appendChild(solverIframe);
-            clearInterval(int);
-        }
-    }, 30);
+let sandboxUrl = fetch(chrome.runtime.getURL(`sandbox.html`))
+    .then(resp => resp.blob())
+    .then(blob => URL.createObjectURL(blob))
+    .catch(console.error);
+
+function createSolverFrame() {
+    if (solverIframe) solverIframe.remove();
+    solverIframe = document.createElement('iframe');
+    solverIframe.style.display = 'none';
+    sandboxUrl.then(url => solverIframe.src = url);
+    let injectedBody = document.getElementById('injected-body');
+    if(injectedBody) {
+        injectedBody.appendChild(solverIframe);
+    } else {
+        let int = setInterval(() => {
+            let injectedBody = document.getElementById('injected-body');
+            if(injectedBody) {
+                injectedBody.appendChild(solverIframe);
+                clearInterval(int);
+            }
+        }, 10);
+    }
 }
+createSolverFrame();
 
 function solveChallenge(path, method) {
     return new Promise((resolve, reject) => {
@@ -28,7 +39,7 @@ function solveChallenge(path, method) {
         }
         let id = solveId++;
         solveCallbacks[id] = { resolve, reject, time: Date.now() };
-        if(!solverIframe || !solverIframe.contentWindow || !solverReady) {
+        if(!solverReady || !solverIframe || !solverIframe.contentWindow) {
             solveQueue.push({ id, path, method })
         } else {
             try {
@@ -46,6 +57,14 @@ function solveChallenge(path, method) {
         }
     });
 }
+
+setInterval(() => {
+    if(!document.getElementById('loading-box').hidden && sentData && solveQueue.length) {
+        console.log("Something's wrong with the challenge solver, reloading", solveQueue);
+        createSolverFrame();
+        initChallenge();
+    }
+}, 2000);
 
 window.addEventListener('message', e => {
     if(e.source !== solverIframe.contentWindow) return;
@@ -130,39 +149,20 @@ async function initChallenge() {
         let anims = Array.from(dom.querySelectorAll('svg[id^="loading-x"]')).map(svg => svg.outerHTML);
 
         let challengeCode = homepageData.match(/"ondemand.s":"(\w+)"/)[1];
-        let challengeData;
-        try {
-            challengeData = await _fetch(`https://abs.twimg.com/responsive-web/client-web/ondemand.s.${challengeCode}a.js`).then(res => res.text());
-        } catch(e) {
-            await sleep(500);
-            try {
-                challengeData = await _fetch(`https://abs.twimg.com/responsive-web/client-web/ondemand.s.${challengeCode}a.js`).then(res => res.text());
-            } catch(e) {
-                await sleep(1000);
-                try {
-                    challengeData = await _fetch(`https://abs.twimg.com/responsive-web/client-web/ondemand.s.${challengeCode}a.js`).then(res => res.text());
-                } catch(e) {
-                    throw new Error('Failed to fetch challenge data: ' + e);
-                }
-            }
-        }
 
         OLDTWITTER_CONFIG.verificationKey = verificationKey;
 
         function sendInit() {
+            sentData = true;
+            if(!solverIframe || !solverIframe.contentWindow) return setTimeout(sendInit, 50);
             solverIframe.contentWindow.postMessage({
                 action: 'init',
-                code: challengeData,
                 challengeCode,
                 anims,
                 verificationCode: OLDTWITTER_CONFIG.verificationKey
             }, '*');
         }
-        if(solverIframe.contentWindow) {
-            sendInit();
-        } else {
-            solverIframe.addEventListener('load', () => sendInit());
-        }
+        setTimeout(sendInit, 50);
         return true;
     } catch (e) {
         console.error(`Error during challenge init:`);
