@@ -3682,7 +3682,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                                     "timestamp": ts,
                                     "id": t.id_str,
                                     "index": _index,
-                                    "filename": url.pathname.substring(url.pathname.lastIndexOf('/') + 1, url.pathname.lastIndexOf('.'))
+                                    "filename": URL.pathname.substring(URL.pathname.lastIndexOf('/') + 1, URL.pathname.lastIndexOf('.'))
                                 };
                                 filename = filename_template.replace(/\{([\w]+)\}/g, (_, key) => filesave_map[key]);
                             }
