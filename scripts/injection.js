@@ -147,7 +147,8 @@ const TRANSLATORS = {
         ["Aurore C.", "https://asuure.com/"],
         ["zdimension", "/zdimension_"],
         ["Pikatchoum", "/applitom45"],
-        ["adriend", "/_adriend_"]
+        ["adriend", "/_adriend_"],
+        ["celestial04_", "/celestial04_"]
     ],
     "pt_BR": [
         ["kigi", "/kigidere"],
@@ -189,7 +190,7 @@ const TRANSLATORS = {
     "th": ["0.21%BloodAlcohol", "https://github.com/Silberweich"],
     "ko": [
         ["Nyankodasu", "https://github.com/Nyankodasu"],
-        ["한예림", "/han_eirin"]
+        ["HY"]
     ],
     "pl": [
         ["lele"],
@@ -206,7 +207,10 @@ const TRANSLATORS = {
     ],
     "cs": ["Menal"],
     "de": ["basti564", "/basti564"],
-    "ca": ["elmees21", "/elmees21"],
+    "ca": [
+        ["elmees21", "/elmees21"],
+        ["Luna", "/chica_botella"]
+    ], 
     "sv": ["actuallyaridan", "/actuallyaridan"],
     "bg": ["Scarlett7447", "/Scarlett7447"],
     "nb": ["twistquest", "/twistquest"],
