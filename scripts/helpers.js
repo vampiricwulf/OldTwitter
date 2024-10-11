@@ -3630,11 +3630,11 @@ async function appendTweet(t, timelineContainer, options = {}) {
             tweetInteractMoreMenuDownloadGifs.forEach(dgb => dgb.addEventListener('click', e => {
                 if (downloading) return;
                 downloading = true;
-                let url = item.type === 'photo' ? item.media_url_https : item.video_info.variants[0].url;
-                url = new URL(url);
                 let n = parseInt(e.target.dataset.gifno)-1;
                 let videos = Array.from(tweet.getElementsByClassName('tweet-media-gif'));
                 let video = videos[n];
+                let url = video.currentSrc;
+                url = new URL(url);
                 let canvas = document.createElement('canvas');
                 canvas.width = video.videoWidth;
                 canvas.height = video.videoHeight;
