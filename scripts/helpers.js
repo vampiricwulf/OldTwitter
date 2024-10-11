@@ -3671,7 +3671,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                             a.href = URL.createObjectURL(blob);
                             let ts = new Date(t.created_at).toISOString().split("T")[0];
                             let extension = 'gif'
-                            let _index = t.extended_entities.media.length > 1 ? "-"+(index) : "";
+                            let _index = t.extended_entities.media.length > 1 ? "-"+(n) : "";
                             let filename = `@${t.user.screen_name}-${t.id_str}${_index}.${extension}`;
                             let filename_template = vars.customDownloadTemplate;
 
