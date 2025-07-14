@@ -183,7 +183,7 @@
     "algo": { "message": "舊版推薦演算法" },
     "timeline_type": { "message": "時間軸類型" },
     "show_topic_tweets": { "message": "顯示話題推文（僅限推薦演算法）" },
-    "show_colors_in_timeline": { "message": "在首頁時間軸中顯示使用者的自訂連結顏色" },
+    "slow_show_colors_in_timeline": { "message": "Show custom link colors of users in home timeline (This can cause slow downs on some devices!)" },
     "always_show_link_color": { "message": "總是顯示自訂連結顏色，而非僅在懸停時顯示" },
     "enable_twemoji": { "message": "啟用 Twemoji" },
     "hearts_instead_stars": { "message": "顯示心型（喜歡），而非星型（收藏）" },
@@ -646,5 +646,6 @@
     "suspended_user": { "message": "此帳號已被停用" },
     "suspended_user_desc": { "message": "你要查看的個人資料已被停用。 要返回首頁，請<a href=\"/home\">點一下這裡</a>。" },
     "show_boring_indicators": { "message": "在「跟隨中」及「粉絲」列表中顯示圖示，以表示各使用者的最後推文狀態（轉推、引用、一段時間前或沒有推文）。" },
-    "hide_original_languages":{"message": "翻譯推文後隱藏原文" }
+    "hide_original_languages":{"message": "翻譯推文後隱藏原文" },
+    "blocked": {"message": "已封鎖"}
 }
