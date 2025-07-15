@@ -113,7 +113,7 @@ async function handleFiles(files, mediaArray, mediaContainer, is_dm = false) {
                         let canvas = document.createElement("canvas");
                         let ctx = canvas.getContext("2d");
                         let img = new Image();
-                        img.onload = function () {
+                        img.onload = function() {
                             canvas.width = img.width;
                             canvas.height = img.height;
                             ctx.drawImage(img, 0, 0);
@@ -219,31 +219,24 @@ async function handleFiles(files, mediaArray, mediaContainer, is_dm = false) {
                     cw.addEventListener("click", () => {
                         createModal(`
                             <div class="cw-modal" style="color:var(--almost-black)">
-                                <h2 class="nice-header">${
-                                    LOC.content_warnings.message
-                                }</h2>
+                                <h2 class="nice-header">${LOC.content_warnings.message
+                            }</h2>
                                 <br>
-                                <input type="checkbox" id="cw-modal-graphic_violence"${
-                                    mediaObject.cw.includes("graphic_violence")
-                                        ? " checked"
-                                        : ""
-                                }> <label for="cw-modal-graphic_violence">${
-                            LOC.graphic_violence.message
-                        }</label><br>
-                                <input type="checkbox" id="cw-modal-adult_content"${
-                                    mediaObject.cw.includes("adult_content")
-                                        ? " checked"
-                                        : ""
-                                }> <label for="cw-modal-adult_content">${
-                            LOC.adult_content.message
-                        }</label><br>
-                                <input type="checkbox" id="cw-modal-other"${
-                                    mediaObject.cw.includes("other")
-                                        ? " checked"
-                                        : ""
-                                }> <label for="cw-modal-other">${
-                            LOC.sensitive_content.message
-                        }</label><br>
+                                <input type="checkbox" id="cw-modal-graphic_violence"${mediaObject.cw.includes("graphic_violence")
+                                ? " checked"
+                                : ""
+                            }> <label for="cw-modal-graphic_violence">${LOC.graphic_violence.message
+                            }</label><br>
+                                <input type="checkbox" id="cw-modal-adult_content"${mediaObject.cw.includes("adult_content")
+                                ? " checked"
+                                : ""
+                            }> <label for="cw-modal-adult_content">${LOC.adult_content.message
+                            }</label><br>
+                                <input type="checkbox" id="cw-modal-other"${mediaObject.cw.includes("other")
+                                ? " checked"
+                                : ""
+                            }> <label for="cw-modal-other">${LOC.sensitive_content.message
+                            }</label><br>
                             </div>
                         `);
                         let graphic_violence = document.getElementById(
@@ -286,12 +279,12 @@ async function handleFiles(files, mediaArray, mediaContainer, is_dm = false) {
                                 ? "dm_gif"
                                 : "tweet_gif"
                             : file.type.includes("video")
-                            ? is_dm
-                                ? "dm_video"
-                                : "tweet_video"
-                            : is_dm
-                            ? "dm_image"
-                            : "tweet_image",
+                                ? is_dm
+                                    ? "dm_video"
+                                    : "tweet_video"
+                                : is_dm
+                                    ? "dm_image"
+                                    : "tweet_image",
                     };
                     mediaArray.push(mediaObject);
                     if (file.type.includes("video")) {
@@ -449,25 +442,25 @@ function onVisibilityChange(callback) {
     // Standards:
     if ("hidden" in document) {
         visible = !document.hidden;
-        document.addEventListener("visibilitychange", function () {
+        document.addEventListener("visibilitychange", function() {
             (document.hidden ? unfocused : focused)();
         });
     }
     if ("mozHidden" in document) {
         visible = !document.mozHidden;
-        document.addEventListener("mozvisibilitychange", function () {
+        document.addEventListener("mozvisibilitychange", function() {
             (document.mozHidden ? unfocused : focused)();
         });
     }
     if ("webkitHidden" in document) {
         visible = !document.webkitHidden;
-        document.addEventListener("webkitvisibilitychange", function () {
+        document.addEventListener("webkitvisibilitychange", function() {
             (document.webkitHidden ? unfocused : focused)();
         });
     }
     if ("msHidden" in document) {
         visible = !document.msHidden;
-        document.addEventListener("msvisibilitychange", function () {
+        document.addEventListener("msvisibilitychange", function() {
             (document.msHidden ? unfocused : focused)();
         });
     }
@@ -558,14 +551,11 @@ async function renderTweetBodyHTML(t, is_quoted) {
                     let snippetText = escapeHTML(
                         full_text_array.slice(fromIndex, toIndex).join("")
                     );
-                    let startingTags = `${
-                        snippet.richtext_types.includes("Bold") ? "<b>" : ""
-                    }${snippet.richtext_types.includes("Italic") ? "<i>" : ""}`;
-                    let endingTags = `${
-                        snippet.richtext_types.includes("Bold") ? "</b>" : ""
-                    }${
-                        snippet.richtext_types.includes("Italic") ? "</i>" : ""
-                    }`;
+                    let startingTags = `${snippet.richtext_types.includes("Bold") ? "<b>" : ""
+                        }${snippet.richtext_types.includes("Italic") ? "<i>" : ""}`;
+                    let endingTags = `${snippet.richtext_types.includes("Bold") ? "</b>" : ""
+                        }${snippet.richtext_types.includes("Italic") ? "</i>" : ""
+                        }`;
 
                     return `${startingTags}${snippetText}${endingTags}`;
                 },
@@ -585,10 +575,9 @@ async function renderTweetBodyHTML(t, is_quoted) {
                     hashtag.indices[1],
                     (text) =>
                         `#${escapeHTML(hashtag.text)}` +
-                        `${
-                            hashflag
-                                ? `<img src="${hashflag.asset_url}" class="hashflag">`
-                                : ""
+                        `${hashflag
+                            ? `<img src="${hashflag.asset_url}" class="hashflag">`
+                            : ""
                         }`,
                 ];
             });
@@ -614,10 +603,9 @@ async function renderTweetBodyHTML(t, is_quoted) {
                     (text) =>
                         `<a href="/hashtag/${escapeHTML(hashtag.text)}">` +
                         `#${escapeHTML(hashtag.text)}` +
-                        `${
-                            hashflag
-                                ? `<img src="${hashflag.asset_url}" class="hashflag">`
-                                : ""
+                        `${hashflag
+                            ? `<img src="${hashflag.asset_url}" class="hashflag">`
+                            : ""
                         }` +
                         `</a>`,
                 ];
@@ -756,8 +744,8 @@ function generatePoll(tweet, tweetElement, user) {
                 <div class="choice-label">
                     <span>${escapeHTML(choice.label)}</span>
                     ${choice.selected
-                        ? `<span class="choice-selected"></span>`
-                        : ""}
+                    ? `<span class="choice-selected"></span>`
+                    : ""}
                 </div>
                 ${isFinite(choice.percentage)
                     ? `<div class="choice-count">${choice.count} (${choice.percentage}%)</div>`
@@ -805,12 +793,12 @@ function generatePoll(tweet, tweetElement, user) {
         }
         footer.innerHTML = html`${voteCount}
         ${voteCount === 1
-            ? LOC.vote.message
-            : LOC.votes.message}${(!poll.counts_are_final ||
-            !poll.counts_are_final.boolean_value) &&
-        poll.end_datetime_utc
-            ? ` ・ ${endsAtMessage}`
-            : ""}`;
+                ? LOC.vote.message
+                : LOC.votes.message}${(!poll.counts_are_final ||
+                    !poll.counts_are_final.boolean_value) &&
+                    poll.end_datetime_utc
+                    ? ` ・ ${endsAtMessage}`
+                    : ""}`;
         pollElement.append(footer);
     }
 }
@@ -920,11 +908,10 @@ function generateCard(tweet, tweetElement, user) {
             button.addEventListener("click", async () => {
                 let modal = createModal(`
                     <p style="color:var(--almost-black);margin-top:0">${LOC.do_you_want_to_tweet.message.replace(
-                        "$TWEET_TEXT$",
-                        b[1].string_value
-                    )}</p>
-                    <button class="nice-button">${
-                        LOC.tweet_verb.message
+                    "$TWEET_TEXT$",
+                    b[1].string_value
+                )}</p>
+                    <button class="nice-button">${LOC.tweet_verb.message
                     }</button>
                 `);
                 modal
@@ -1026,7 +1013,7 @@ function generateCard(tweet, tweetElement, user) {
                             {
                                 savePreferredQuality: true,
                             },
-                            () => {}
+                            () => { }
                         );
                         vars.savePreferredQuality = true;
                     }
@@ -1039,15 +1026,15 @@ function generateCard(tweet, tweetElement, user) {
                             .reduce((prev, curr) => {
                                 return Math.abs(
                                     parseInt(curr.url.match(/\/(\d+)x/)[1]) -
-                                        parseInt(localStorage.preferredQuality)
+                                    parseInt(localStorage.preferredQuality)
                                 ) <
                                     Math.abs(
                                         parseInt(
                                             prev.url.match(/\/(\d+)x/)[1]
                                         ) -
-                                            parseInt(
-                                                localStorage.preferredQuality
-                                            )
+                                        parseInt(
+                                            localStorage.preferredQuality
+                                        )
                                     )
                                     ? curr
                                     : prev;
@@ -1075,7 +1062,7 @@ function generateCard(tweet, tweetElement, user) {
             } else if (co.type === "app_store_details") {
                 let app =
                     uc.app_store_data[
-                        uc.destination_objects[co.data.destination].data.app_id
+                    uc.destination_objects[co.data.destination].data.app_id
                     ][0];
                 let appElement = document.createElement("div");
                 appElement.classList.add("tweet-app-info");
@@ -1093,7 +1080,7 @@ function generateCard(tweet, tweetElement, user) {
                 for (let b of co.data.buttons) {
                     let app =
                         uc.app_store_data[
-                            uc.destination_objects[b.destination].data.app_id
+                        uc.destination_objects[b.destination].data.app_id
                         ][0];
                     let button = document.createElement("a");
                     button.href = `http://play.google.com/store/apps/details?id=${app.id}`;
@@ -1130,20 +1117,20 @@ function generateCard(tweet, tweetElement, user) {
                 : ""}
             <div class="tweet-card-link-text">
                 ${vals.vanity_url
-                    ? `<span class="tweet-card-link-vanity">${escapeHTML(
-                          vals.vanity_url.string_value
-                      )}</span><br>`
-                    : ""}
+                ? `<span class="tweet-card-link-vanity">${escapeHTML(
+                    vals.vanity_url.string_value
+                )}</span><br>`
+                : ""}
                 ${vals.title
-                    ? `<h3 class="tweet-card-link-title">${escapeHTML(
-                          vals.title.string_value
-                      )}</h3>`
-                    : ""}
+                ? `<h3 class="tweet-card-link-title">${escapeHTML(
+                    vals.title.string_value
+                )}</h3>`
+                : ""}
                 ${vals.description
-                    ? `<span class="tweet-card-link-description">${escapeHTML(
-                          vals.description.string_value
-                      )}</span>`
-                    : ""}
+                ? `<span class="tweet-card-link-description">${escapeHTML(
+                    vals.description.string_value
+                )}</span>`
+                : ""}
             </div>
         `;
         tweetElement.getElementsByClassName("tweet-card")[0].append(a);
@@ -1401,7 +1388,7 @@ async function getLinkColors(ids) {
                     let t = setTimeout(() => controller.abort(), 1000);
                     let res = await fetch(
                         "https://dimden.dev/services/twitter_link_colors/v2/get_multiple/" +
-                            toFetch.join(","),
+                        toFetch.join(","),
                         {
                             signal: controller.signal,
                         }
@@ -1422,9 +1409,9 @@ async function getLinkColors(ids) {
                     }
                     let keys = Object.keys(linkColors);
                     if (keys.length > 20000) {
-                        chrome.storage.local.set({ linkColors: {} }, () => {});
+                        chrome.storage.local.set({ linkColors: {} }, () => { });
                     } else {
-                        chrome.storage.local.set({ linkColors }, () => {});
+                        chrome.storage.local.set({ linkColors }, () => { });
                     }
                     return resolve(fetched);
                 } catch (e) {
@@ -1474,7 +1461,7 @@ async function getLinkColors(ids) {
                 for (let id of hasColourIds) {
                     fetched.push({ id, color: legacyLinkColors[id] });
                 }
-                chrome.storage.local.set({ legacyLinkColors }, () => {});
+                chrome.storage.local.set({ legacyLinkColors }, () => { });
                 resolve(fetched);
             });
         }),
@@ -1746,14 +1733,14 @@ async function renderTrends(compact = false, cache = true) {
                       >
                           ${escapeHTML(trend.name)}
                           ${hashflag
-                              ? `<img src="${hashflag.asset_url}" class="hashflag" width="16" height="16">`
-                              : ""}
+                    ? `<img src="${hashflag.asset_url}" class="hashflag" width="16" height="16">`
+                    : ""}
                       </a> </b
                   ><br />
                   <span class="trend-description"
                       >${trend.meta_description
-                          ? escapeHTML(trend.meta_description)
-                          : ""}</span
+                    ? escapeHTML(trend.meta_description)
+                    : ""}</span
                   >
               `;
         trendsContainer.append(trendDiv);
@@ -1807,16 +1794,14 @@ async function renderDiscovery(cache = true) {
             udiv.innerHTML = html`
                 <a class="tweet-avatar-link" href="/${userData.screen_name}"
                     ><img
-                        src="${`${
-                            userData.default_profile_image &&
-                            vars.useOldDefaultProfileImage
-                                ? chrome.runtime.getURL(
-                                      `images/default_profile_images/default_profile_${
-                                          Number(userData.id_str) % 7
-                                      }_normal.png`
-                                  )
-                                : userData.profile_image_url_https
-                        }`.replace("_normal", "_bigger")}"
+                        src="${`${userData.default_profile_image &&
+                    vars.useOldDefaultProfileImage
+                    ? chrome.runtime.getURL(
+                        `images/default_profile_images/default_profile_${Number(userData.id_str) % 7
+                        }_normal.png`
+                    )
+                    : userData.profile_image_url_https
+                    }`.replace("_normal", "_bigger")}"
                         alt="${escapeHTML(userData.name)}"
                         class="tweet-avatar"
                         width="48"
@@ -1829,17 +1814,17 @@ async function renderDiscovery(cache = true) {
                     >
                         <b
                             class="tweet-header-name wtf-user-name${userData.verified ||
-                            userData.verified_type
-                                ? " user-verified"
-                                : userData.id_str === "1708130407663759360"
-                                ? " user-verified user-verified-dimden"
-                                : ""} ${userData.verified_type === "Government"
-                                ? "user-verified-gray"
-                                : userData.verified_type === "Business"
+                    userData.verified_type
+                    ? " user-verified"
+                    : userData.id_str === "1708130407663759360"
+                        ? " user-verified user-verified-dimden"
+                        : ""} ${userData.verified_type === "Government"
+                            ? "user-verified-gray"
+                            : userData.verified_type === "Business"
                                 ? "user-verified-yellow"
                                 : userData.verified_type === "Blue"
-                                ? "user-verified-blue"
-                                : ""}"
+                                    ? "user-verified-blue"
+                                    : ""}"
                             >${escapeHTML(userData.name)}</b
                         >
                         <span class="tweet-header-handle wtf-user-handle"
@@ -1849,13 +1834,13 @@ async function renderDiscovery(cache = true) {
                     <br />
                     <button
                         class="nice-button discover-follow-btn ${userData.following
-                            ? "following"
-                            : "follow"}"
+                    ? "following"
+                    : "follow"}"
                         style="position:relative;bottom: 1px;"
                     >
                         ${userData.following
-                            ? LOC.following_btn.message
-                            : LOC.follow.message}
+                    ? LOC.following_btn.message
+                    : LOC.follow.message}
                     </button>
                 </div>
             `;
@@ -1893,7 +1878,7 @@ async function renderDiscovery(cache = true) {
                             data: discover,
                         },
                     },
-                    () => {}
+                    () => { }
                 );
             });
             discoverContainer.append(udiv);
@@ -1962,15 +1947,15 @@ function renderMedia(t) {
             newClone.src =
                 m.media_url_https +
                 (vars.showOriginalImages &&
-                (m.media_url_https.endsWith(".jpg") ||
-                    m.media_url_https.endsWith(".png"))
+                    (m.media_url_https.endsWith(".jpg") ||
+                        m.media_url_https.endsWith(".png"))
                     ? "?name=orig"
                     : window.navigator &&
-                      navigator.connection &&
-                      navigator.connection.type === "cellular" &&
-                      !vars.disableDataSaver
-                    ? "?name=small"
-                    : "");
+                        navigator.connection &&
+                        navigator.connection.type === "cellular" &&
+                        !vars.disableDataSaver
+                        ? "?name=small"
+                        : "");
             var mediaClass = mediaClasses[t.extended_entities.media.length];
             if (mediaClass) newClone.classList.add(mediaClass);
             if (toCensor) newClone.classList.add("tweet-media-element-censor");
@@ -2098,73 +2083,60 @@ async function appendUser(u, container, label, usernameClass = "") {
     }
     userElement.innerHTML = html`
         <div${vars.extensionCompatibilityMode ? ' data-testid="UserCell"' : ""}>
-            ${
-                vars.extensionCompatibilityMode
-                    ? `<a href="/${
-                          u.screen_name
-                      }" style="display: none;"></a><a style="display: none;">${escapeHTML(
-                          u.name
-                      )}</a>`
-                    : ""
-            }
+            ${vars.extensionCompatibilityMode
+            ? `<a href="/${u.screen_name
+            }" style="display: none;"></a><a style="display: none;">${escapeHTML(
+                u.name
+            )}</a>`
+            : ""
+        }
             <a href="/${u.screen_name}" class="user-item-link">
-                <img src="${
-                    u.default_profile_image && vars.useOldDefaultProfileImage
-                        ? chrome.runtime.getURL(
-                              `images/default_profile_images/default_profile_${
-                                  Number(u.id_str) % 7
-                              }_normal.png`
-                          )
-                        : u.profile_image_url_https
-                }" alt="${
-        u.screen_name
-    }" class="user-item-avatar tweet-avatar" width="48" height="48">
+                <img src="${u.default_profile_image && vars.useOldDefaultProfileImage
+            ? chrome.runtime.getURL(
+                `images/default_profile_images/default_profile_${Number(u.id_str) % 7
+                }_normal.png`
+            )
+            : u.profile_image_url_https
+        }" alt="${u.screen_name
+        }" class="user-item-avatar tweet-avatar" width="48" height="48">
                 <div class="user-item-text">
-                    <span${
-                        u.id_str === "1708130407663759360"
-                            ? ' title="Old Twitter Layout extension developer"'
-                            : ""
-                    } class="tweet-header-name user-item-name ${usernameClass} ${
-        u.protected ? " user-protected" : ""
-    }${u.muting ? " user-muted" : ""}${
-        u.verified || u.verified_type
+                    <span${u.id_str === "1708130407663759360"
+            ? ' title="Old Twitter Layout extension developer"'
+            : ""
+        } class="tweet-header-name user-item-name ${usernameClass} ${u.protected ? " user-protected" : ""
+        }${u.muting ? " user-muted" : ""}${u.verified || u.verified_type
             ? " user-verified"
             : u.id_str === "1708130407663759360"
-            ? " user-verified user-verified-dimden"
-            : ""
-    } ${
-        u.verified_type === "Government"
+                ? " user-verified user-verified-dimden"
+                : ""
+        } ${u.verified_type === "Government"
             ? "user-verified-gray"
             : u.verified_type === "Business"
-            ? "user-verified-yellow"
-            : u.verified_type === "Blue"
-            ? "user-verified-blue"
-            : ""
-    }">${escapeHTML(u.name)}</span><br>
+                ? "user-verified-yellow"
+                : u.verified_type === "Blue"
+                    ? "user-verified-blue"
+                    : ""
+        }">${escapeHTML(u.name)}</span><br>
                     <span class="tweet-header-handle">@${u.screen_name}</span>
-                    ${
-                        u.followed_by
-                            ? `<span class="follows-you-label">${LOC.follows_you.message}</span>`
-                            : ""
-                    }
-                    ${
-                        label
-                            ? `<br><span class="user-item-additional">${escapeHTML(
-                                  label
-                              )}</span>`
-                            : ""
-                    }
+                    ${u.followed_by
+            ? `<span class="follows-you-label">${LOC.follows_you.message}</span>`
+            : ""
+        }
+                    ${label
+            ? `<br><span class="user-item-additional">${escapeHTML(
+                label
+            )}</span>`
+            : ""
+        }
                 </div>
             </a>
         </div>
         <div${u.id_str === user.id_str ? " hidden" : ""}>
-    <button class="user-item-btn nice-button ${
-        u.blocking ? "blocked" : u.following ? "following" : "follow"
-    }">
-        ${
-            u.blocking
-                ? LOC.blocked.message
-                : u.following
+    <button class="user-item-btn nice-button ${u.blocking ? "blocked" : u.following ? "following" : "follow"
+        }">
+        ${u.blocking
+            ? LOC.blocked.message
+            : u.following
                 ? LOC.following_btn.message
                 : LOC.follow.message
         }
@@ -2286,13 +2258,11 @@ async function appendTweet(t, timelineContainer, options = {}) {
                             );
                         });
                 }
-                options.top.text = `<${
-                    t.socialContext.landingUrl.url.split("=")[1]
-                        ? `a href="/i/user/${
-                              t.socialContext.landingUrl.url.split("=")[1]
-                          }"`
-                        : "span"
-                }>${t.socialContext.text}</a>`;
+                options.top.text = `<${t.socialContext.landingUrl.url.split("=")[1]
+                    ? `a href="/i/user/${t.socialContext.landingUrl.url.split("=")[1]
+                    }"`
+                    : "span"
+                    }>${t.socialContext.text}</a>`;
                 if (vars.heartsNotStars) {
                     options.top.icon = "\uf015";
                     options.top.color = "rgb(249, 24, 128)";
@@ -2467,13 +2437,12 @@ async function appendTweet(t, timelineContainer, options = {}) {
             }
         });
         tweet.tabIndex = -1;
-        tweet.className = `tweet ${
-            options.mainTweet
-                ? "tweet-main"
-                : location.pathname.includes("/status/")
+        tweet.className = `tweet ${options.mainTweet
+            ? "tweet-main"
+            : location.pathname.includes("/status/")
                 ? "tweet-replying"
                 : ""
-        }`.trim();
+            }`.trim();
         tweet.dataset.tweetId = t.id_str;
         tweet.dataset.userId = t.user.id_str;
         try {
@@ -2481,7 +2450,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                 tweet.classList.add("tweet-active");
                 activeTweet = tweet;
             }
-        } catch (e) {}
+        } catch (e) { }
 
         if (t.nonReply) {
             tweet.classList.add("tweet-non-reply");
@@ -2546,7 +2515,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                         {
                             savePreferredQuality: true,
                         },
-                        () => {}
+                        () => { }
                     );
                     vars.savePreferredQuality = true;
                 }
@@ -2559,11 +2528,11 @@ async function appendTweet(t, timelineContainer, options = {}) {
                         .reduce((prev, curr) => {
                             return Math.abs(
                                 parseInt(curr.url.match(/\/(\d+)x/)[1]) -
-                                    parseInt(localStorage.preferredQuality)
+                                parseInt(localStorage.preferredQuality)
                             ) <
                                 Math.abs(
                                     parseInt(prev.url.match(/\/(\d+)x/)[1]) -
-                                        parseInt(localStorage.preferredQuality)
+                                    parseInt(localStorage.preferredQuality)
                                 )
                                 ? curr
                                 : prev;
@@ -2842,17 +2811,17 @@ async function appendTweet(t, timelineContainer, options = {}) {
                                         parseInt(
                                             curr.url.match(/\/(\d+)x/)[1]
                                         ) -
-                                            parseInt(
-                                                localStorage.preferredQuality
-                                            )
+                                        parseInt(
+                                            localStorage.preferredQuality
+                                        )
                                     ) <
                                         Math.abs(
                                             parseInt(
                                                 prev.url.match(/\/(\d+)x/)[1]
                                             ) -
-                                                parseInt(
-                                                    localStorage.preferredQuality
-                                                )
+                                            parseInt(
+                                                localStorage.preferredQuality
+                                            )
                                         )
                                         ? curr
                                         : prev;
@@ -2864,7 +2833,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                             if (preferredQualityVariantIndex !== -1) {
                                 let preferredQualityVariant =
                                     v.video_info.variants[
-                                        preferredQualityVariantIndex
+                                    preferredQualityVariantIndex
                                     ];
                                 v.video_info.variants.splice(
                                     preferredQualityVariantIndex,
@@ -2881,69 +2850,58 @@ async function appendTweet(t, timelineContainer, options = {}) {
                             ${t.extended_entities.media
                                 .map(
                                     (m) =>
-                                        `<${
-                                            m.type === "photo" ? "img" : "video"
-                                        } ${
-                                            m.ext_alt_text
-                                                ? `alt="${escapeHTML(
-                                                      m.ext_alt_text,
-                                                      true
-                                                  )}" title="${escapeHTML(
-                                                      m.ext_alt_text,
-                                                      true
-                                                  )}"`
-                                                : ""
-                                        } crossorigin="anonymous" width="${
-                                            sizeFunctions[
-                                                t.extended_entities.media.length
-                                            ](
-                                                m.original_info.width,
-                                                m.original_info.height
-                                            )[0]
-                                        }" height="${
-                                            sizeFunctions[
-                                                t.extended_entities.media.length
-                                            ](
-                                                m.original_info.width,
-                                                m.original_info.height
-                                            )[1]
-                                        }" loading="lazy" ${
-                                            m.type === "video" ? "controls" : ""
-                                        } ${
-                                            m.type === "animated_gif"
-                                                ? 'loop muted onclick="if(this.paused) this.play(); else this.pause()"'
-                                                : ""
-                                        }${
-                                            m.type === "animated_gif" &&
+                                        `<${m.type === "photo" ? "img" : "video"
+                                        } ${m.ext_alt_text
+                                            ? `alt="${escapeHTML(
+                                                m.ext_alt_text,
+                                                true
+                                            )}" title="${escapeHTML(
+                                                m.ext_alt_text,
+                                                true
+                                            )}"`
+                                            : ""
+                                        } crossorigin="anonymous" width="${sizeFunctions[
+                                            t.extended_entities.media.length
+                                        ](
+                                            m.original_info.width,
+                                            m.original_info.height
+                                        )[0]
+                                        }" height="${sizeFunctions[
+                                            t.extended_entities.media.length
+                                        ](
+                                            m.original_info.width,
+                                            m.original_info.height
+                                        )[1]
+                                        }" loading="lazy" ${m.type === "video" ? "controls" : ""
+                                        } ${m.type === "animated_gif"
+                                            ? 'loop muted onclick="if(this.paused) this.play(); else this.pause()"'
+                                            : ""
+                                        }${m.type === "animated_gif" &&
                                             !vars.disableGifAutoplay
-                                                ? " autoplay"
-                                                : ""
-                                        } ${
-                                            m.type === "photo"
-                                                ? `src="${m.media_url_https}"`
-                                                : ""
-                                        } class="tweet-media-element ${
-                                            mediaClasses[
-                                                t.extended_entities.media.length
-                                            ]
-                                        } ${
-                                            !vars.displaySensitiveContent &&
+                                            ? " autoplay"
+                                            : ""
+                                        } ${m.type === "photo"
+                                            ? `src="${m.media_url_https}"`
+                                            : ""
+                                        } class="tweet-media-element ${mediaClasses[
+                                        t.extended_entities.media.length
+                                        ]
+                                        } ${!vars.displaySensitiveContent &&
                                             t.possibly_sensitive
-                                                ? "tweet-media-element-censor"
-                                                : ""
-                                        }">${
-                                            m.type === "video" ||
+                                            ? "tweet-media-element-censor"
+                                            : ""
+                                        }">${m.type === "video" ||
                                             m.type === "animated_gif"
-                                                ? `
+                                            ? `
                             ${m.video_info.variants
-                                .map(
-                                    (v) =>
-                                        `<source src="${v.url}" type="${v.content_type}">`
-                                )
-                                .join("\n")}
+                                                .map(
+                                                    (v) =>
+                                                        `<source src="${v.url}" type="${v.content_type}">`
+                                                )
+                                                .join("\n")}
                             ${LOC.unsupported_video.message}
                         </video>`
-                                                : ""
+                                            : ""
                                         }`
                                 )
                                 .join("\n")}
@@ -2989,7 +2947,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                         {
                             volume: vid.volume,
                         },
-                        () => {}
+                        () => { }
                     );
                     if (vars.muteVideos) return;
                     let allVids = document.getElementsByTagName("video");
@@ -3031,8 +2989,8 @@ async function appendTweet(t, timelineContainer, options = {}) {
         if (options.mainTweet) {
             let likers =
                 vars.showQuoteCount &&
-                typeof t.quote_count !== "undefined" &&
-                t.quote_count > 0
+                    typeof t.quote_count !== "undefined" &&
+                    t.quote_count > 0
                     ? mainTweetLikers.slice(0, 6)
                     : mainTweetLikers.slice(0, 8);
             for (let i in likers) {
@@ -3040,16 +2998,14 @@ async function appendTweet(t, timelineContainer, options = {}) {
                 let a = document.createElement("a");
                 a.href = `/${liker.screen_name}`;
                 let likerImg = document.createElement("img");
-                likerImg.src = `${
-                    liker.default_profile_image &&
+                likerImg.src = `${liker.default_profile_image &&
                     vars.useOldDefaultProfileImage
-                        ? chrome.runtime.getURL(
-                              `images/default_profile_images/default_profile_${
-                                  Number(liker.id_str) % 7
-                              }_normal.png`
-                          )
-                        : liker.profile_image_url_https
-                }`;
+                    ? chrome.runtime.getURL(
+                        `images/default_profile_images/default_profile_${Number(liker.id_str) % 7
+                        }_normal.png`
+                    )
+                    : liker.profile_image_url_https
+                    }`;
                 likerImg.classList.add("tweet-footer-favorites-img");
                 likerImg.title = liker.name + " (@" + liker.screen_name + ")";
                 likerImg.width = 24;
@@ -3417,10 +3373,10 @@ async function appendTweet(t, timelineContainer, options = {}) {
                                     <img
                                         style="object-fit: cover;"
                                         src="${l.custom_banner_media
-                                            ? l.custom_banner_media.media_info
-                                                  .original_img_url
-                                            : l.default_banner_media.media_info
-                                                  .original_img_url}"
+                                ? l.custom_banner_media.media_info
+                                    .original_img_url
+                                : l.default_banner_media.media_info
+                                    .original_img_url}"
                                         alt="${l.name}"
                                         class="following-item-avatar tweet-avatar"
                                         width="48"
@@ -3438,11 +3394,11 @@ async function appendTweet(t, timelineContainer, options = {}) {
                                         <span
                                             style="color:var(--darker-gray);font-size:14px;margin-top:2px"
                                             >${l.description
-                                                ? escapeHTML(
-                                                      l.description
-                                                  ).slice(0, 52)
-                                                : LOC.no_description
-                                                      .message}</span
+                                ? escapeHTML(
+                                    l.description
+                                ).slice(0, 52)
+                                : LOC.no_description
+                                    .message}</span
                                         >
                                     </div>
                                 </a>
@@ -3452,8 +3408,8 @@ async function appendTweet(t, timelineContainer, options = {}) {
                             >
                                 <button class="nice-button">
                                     ${l.is_member
-                                        ? LOC.remove.message
-                                        : LOC.add.message}
+                                ? LOC.remove.message
+                                : LOC.add.message}
                                 </button>
                             </div>
                         `;
@@ -3806,7 +3762,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
             switchingBookmark = true;
             chrome.storage.local.set(
                 { tweetReplies: {}, tweetDetails: {} },
-                () => {}
+                () => { }
             );
             if (t.bookmarked) {
                 API.bookmarks
@@ -4112,7 +4068,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
             if (!tweetData) {
                 tweetReplyButton.disabled = false;
                 tweetReplyError.innerHTML = html`${LOC.error_sending_tweet
-                        .message}<br />`;
+                    .message}<br />`;
                 return;
             }
             tweetReplyChar.innerText = localStorage.OTisBlueVerified
@@ -4159,7 +4115,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
             replyMedia = [];
             chrome.storage.local.set(
                 { tweetReplies: {}, tweetDetails: {} },
-                () => {}
+                () => { }
             );
             appendTweet(tweetData, document.getElementById("timeline"), {
                 noTop: true,
@@ -4305,7 +4261,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                                 (tweet) =>
                                     tweet.retweeted_status &&
                                     tweet.retweeted_status.id_str ===
-                                        t.id_str &&
+                                    t.id_str &&
                                     !tweet.current_user_retweet
                             );
                             if (index > -1) {
@@ -4335,7 +4291,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                                 (tweet) =>
                                     tweet.retweeted_status &&
                                     tweet.retweeted_status.id_str ===
-                                        t.id_str &&
+                                    t.id_str &&
                                     !tweet.current_user_retweet
                             );
                             if (index > -1) {
@@ -4348,7 +4304,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
             }
             chrome.storage.local.set(
                 { tweetReplies: {}, tweetDetails: {} },
-                () => {}
+                () => { }
             );
         });
         if (options.mainTweet) {
@@ -4550,7 +4506,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
             tweetQuoteMedia.innerHTML = "";
             chrome.storage.local.set(
                 { tweetReplies: {}, tweetDetails: {} },
-                () => {}
+                () => { }
             );
             if (typeof timeline !== "undefined")
                 timeline.data.unshift(tweetData);
@@ -4629,16 +4585,14 @@ async function appendTweet(t, timelineContainer, options = {}) {
                     let a = document.createElement("a");
                     a.href = `/${user.screen_name}`;
                     let likerImg = document.createElement("img");
-                    likerImg.src = `${
-                        user.default_profile_image &&
+                    likerImg.src = `${user.default_profile_image &&
                         vars.useOldDefaultProfileImage
-                            ? chrome.runtime.getURL(
-                                  `images/default_profile_images/default_profile_${
-                                      Number(user.id_str) % 7
-                                  }_normal.png`
-                              )
-                            : user.profile_image_url_https
-                    }`;
+                        ? chrome.runtime.getURL(
+                            `images/default_profile_images/default_profile_${Number(user.id_str) % 7
+                            }_normal.png`
+                        )
+                        : user.profile_image_url_https
+                        }`;
                     likerImg.classList.add("tweet-footer-favorites-img");
                     likerImg.title = user.name + " (@" + user.screen_name + ")";
                     likerImg.width = 24;
@@ -4688,7 +4642,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
             }
             chrome.storage.local.set(
                 { tweetReplies: {}, tweetDetails: {} },
-                () => {}
+                () => { }
             );
         });
 
@@ -4753,7 +4707,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                 }
                 chrome.storage.local.set(
                     { tweetReplies: {}, tweetDetails: {} },
-                    () => {}
+                    () => { }
                 );
             });
         if (tweetInteractMoreMenuBlock)
@@ -4814,7 +4768,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                 }
                 chrome.storage.local.set(
                     { tweetReplies: {}, tweetDetails: {} },
-                    () => {}
+                    () => { }
                 );
             });
         if (tweetInteractMoreMenuMuteUser)
@@ -4854,7 +4808,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                     }
                     chrome.storage.local.set(
                         { tweetReplies: {}, tweetDetails: {} },
-                        () => {}
+                        () => { }
                     );
                 }
             );
@@ -4915,7 +4869,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                 }
                 chrome.storage.local.set(
                     { tweetReplies: {}, tweetDetails: {} },
-                    () => {}
+                    () => { }
                 );
                 Array.from(
                     document.querySelectorAll(
@@ -5084,7 +5038,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
             }
             chrome.storage.local.set(
                 { tweetReplies: {}, tweetDetails: {} },
-                () => {}
+                () => { }
             );
         });
         tweetInteractMoreMenuMute.addEventListener("click", async () => {
@@ -5101,7 +5055,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
             }
             chrome.storage.local.set(
                 { tweetReplies: {}, tweetDetails: {} },
-                () => {}
+                () => { }
             );
         });
         let downloading = false;
@@ -5131,9 +5085,9 @@ async function appendTweet(t, timelineContainer, options = {}) {
                             let extension = url.pathname.split(".").pop();
                             let _index =
                                 t.extended_entities.media.length > 1
-                                    ? "_" + (index + 1)
+                                    ? "-" + (index)
                                     : "";
-                            let filename = `${t.user.screen_name}_${ts}_${t.id_str}${_index}.${extension}`;
+                            let filename = `@${t.user.screen_name}-${t.id_str}${_index}.${extension}`;
                             let filename_template = vars.customDownloadTemplate;
 
                             // use the filename from the user's custom download template, if any
@@ -5183,6 +5137,8 @@ async function appendTweet(t, timelineContainer, options = {}) {
                         tweet.getElementsByClassName("tweet-media-gif")
                     );
                     let video = videos[n];
+                    let url = video.currentSrc;
+                    url = new URL(url);
                     let canvas = document.createElement("canvas");
                     canvas.width = video.videoWidth;
                     canvas.height = video.videoHeight;
@@ -5209,11 +5165,10 @@ async function appendTweet(t, timelineContainer, options = {}) {
                             isFirst = false;
                             await sleep(5);
                         }
-                        mde.innerText = `${
-                            LOC.initialization.message
-                        }... (${Math.round(
-                            ((video.currentTime / video.duration) * 100) | 0
-                        )}%)`;
+                        mde.innerText = `${LOC.initialization.message
+                            }... (${Math.round(
+                                ((video.currentTime / video.duration) * 100) | 0
+                            )}%)`;
                         if (video.currentTime + step / 1000 >= video.duration) {
                             clearInterval(interval);
                             gif.on("working", (frame, frames) => {
@@ -5230,9 +5185,9 @@ async function appendTweet(t, timelineContainer, options = {}) {
                                 let extension = "gif";
                                 let _index =
                                     t.extended_entities.media.length > 1
-                                        ? "_" + (index + 1)
+                                        ? "-" + (index)
                                         : "";
-                                let filename = `${t.user.screen_name}_${ts}_${t.id_str}${_index}.${extension}`;
+                                let filename = `@${t.user.screen_name}-${t.id_str}${_index}.${extension}`;
                                 let filename_template =
                                     vars.customDownloadTemplate;
 
@@ -5287,7 +5242,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                 let feedback = t.feedback[feedbackButton.dataset.index];
                 if (!feedback) return;
                 feedbackButton.addEventListener("click", () => {
-                    chrome.storage.local.remove(["algoTimeline"], () => {});
+                    chrome.storage.local.remove(["algoTimeline"], () => { });
                     if (
                         feedback.richBehavior &&
                         feedback.richBehavior.markNotInterestedTopic
@@ -5317,7 +5272,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                             }
                         )
                             .then((i) => i.json())
-                            .then(() => {});
+                            .then(() => { });
                     }
                     fetch(`/i/api${feedback.feedbackUrl}`, {
                         method: "post",
@@ -5365,25 +5320,23 @@ async function appendTweet(t, timelineContainer, options = {}) {
             createModal(`
                 <div style="max-width:700px">
                     <span style="font-size:14px;color:var(--default-text-color)">
-                        <h2 style="margin-top: 0">${
-                            LOC.something_went_wrong.message
-                        }</h2>
+                        <h2 style="margin-top: 0">${LOC.something_went_wrong.message
+                }</h2>
                         ${LOC.tweet_error.message}<br>
                         ${LOC.error_instructions.message
-                            .replace(
-                                "$AT1$",
-                                "<a target='_blank' href='https://github.com/dimdenGD/OldTwitter/issues'>"
-                            )
-                            .replace(/\$AT2\$/g, "</a>")
-                            .replace(
-                                "$AT3$",
-                                "<a target='_blank' href='mailto:admin@dimden.dev'>"
-                            )}
+                    .replace(
+                        "$AT1$",
+                        "<a target='_blank' href='https://github.com/dimdenGD/OldTwitter/issues'>"
+                    )
+                    .replace(/\$AT2\$/g, "</a>")
+                    .replace(
+                        "$AT3$",
+                        "<a target='_blank' href='mailto:admin@dimden.dev'>"
+                    )}
                     </span>
                     <div class="box" style="font-family:monospace;line-break: anywhere;padding:5px;margin-top:5px;background:rgba(255, 0, 0, 0.1);color:#ff4545">
-                        ${escapeHTML(e.stack ? e.stack : String(e))} at ${
-                t.id_str
-            } (OldTwitter v${chrome.runtime.getManifest().version})
+                        ${escapeHTML(e.stack ? e.stack : String(e))} at ${t.id_str
+                } (OldTwitter v${chrome.runtime.getManifest().version})
                     </div>
                 </div>
             `);
@@ -5444,9 +5397,8 @@ function renderNotification(n, options = {}) {
                 let mi = 0;
                 let newText = notificationHeader.replace(aRegex, (_, m) => {
                     if (mi++ !== matches) return _;
-                    return `<a href="/${escapeHTML(user.screen_name)}"${
-                        user.verified ? 'class="user-verified"' : ""
-                    }>${escapeHTML(m)}</a>`;
+                    return `<a href="/${escapeHTML(user.screen_name)}"${user.verified ? 'class="user-verified"' : ""
+                        }>${escapeHTML(m)}</a>`;
                 });
                 additionalLength += newText.length - notificationHeader.length;
                 notificationHeader = newText;
@@ -5503,7 +5455,7 @@ function renderNotification(n, options = {}) {
                 } else if (
                     n.entry.clientEventInfo.element === "users_followed_you" ||
                     n.entry.clientEventInfo.element ===
-                        "follow_from_recommended_user"
+                    "follow_from_recommended_user"
                 ) {
                     let a = document.createElement("a");
                     a.href = `/${user.screen_name}/followers`;
@@ -5609,9 +5561,8 @@ function renderNotification(n, options = {}) {
             (u) => n.users[u.user.id]
         );
         if (n.icon.id === "recommendation_icon") {
-            notificationHeader = `<b><a href="/${
-                users[0] ? users[0].screen_name : "#"
-            }">${escapeHTML(notificationHeader)}</a></b>`;
+            notificationHeader = `<b><a href="/${users[0] ? users[0].screen_name : "#"
+                }">${escapeHTML(notificationHeader)}</a></b>`;
         }
         if (!iconClasses[n.icon.id]) {
             console.log(
@@ -5649,8 +5600,8 @@ function renderNotification(n, options = {}) {
             <div class="notification-header">
                 ${notificationHeader}
                 ${n.feedback
-                    ? `<span class="notification-feedback">[${n.feedback.prompt}]</span>`
-                    : ""}
+                ? `<span class="notification-feedback">[${n.feedback.prompt}]</span>`
+                : ""}
             </div>
             <div class="notification-text">
                 ${escapeHTML(
@@ -5662,27 +5613,24 @@ function renderNotification(n, options = {}) {
             </div>
             <div class="notification-avatars">
                 ${users
-                    .map(
-                        (u) =>
-                            `<a class="notification-avatar" href="/${
-                                u.screen_name
-                            }"><img class="notification-avatar-img" src="${`${
-                                !u.profile_image_url_https &&
-                                vars.useOldDefaultProfileImage
-                                    ? chrome.runtime.getURL(
-                                          `images/default_profile_images/default_profile_${
-                                              Number(u.id_str) % 7
-                                          }_normal.png`
-                                      )
-                                    : u.profile_image_url_https
+                .map(
+                    (u) =>
+                        `<a class="notification-avatar" href="/${u.screen_name
+                        }"><img class="notification-avatar-img" src="${`${!u.profile_image_url_https &&
+                            vars.useOldDefaultProfileImage
+                            ? chrome.runtime.getURL(
+                                `images/default_profile_images/default_profile_${Number(u.id_str) % 7
+                                }_normal.png`
+                            )
+                            : u.profile_image_url_https
                             }`.replace(
                                 "_normal",
                                 "_bigger"
                             )}" alt="${escapeHTML(
                                 u.name
                             )}" width="32" height="32"></a>`
-                    )
-                    .join("")}
+                )
+                .join("")}
             </div>
         `;
         let notifText = notification.querySelector(".notification-text");
@@ -5702,7 +5650,7 @@ function renderNotification(n, options = {}) {
             feedbackBtn.addEventListener("click", () => {
                 fetch(
                     "/i/api/2/notifications/feedback.json?" +
-                        n.feedback.feedbackUrl.split("?").slice(1).join("?"),
+                    n.feedback.feedbackUrl.split("?").slice(1).join("?"),
                     {
                         headers: {
                             authorization: OLDTWITTER_CONFIG.public_token,
@@ -5741,25 +5689,24 @@ function renderNotification(n, options = {}) {
             createModal(`
                 <div style="max-width:700px">
                     <span style="font-size:14px;color:var(--default-text-color)">
-                        <h2 style="margin-top: 0">${
-                            LOC.something_went_wrong.message
-                        }</h2>
+                        <h2 style="margin-top: 0">${LOC.something_went_wrong.message
+                }</h2>
                         ${LOC.notifications_error.message}<br>
                         ${LOC.error_instructions.message
-                            .replace(
-                                "$AT1$",
-                                "<a target='_blank' href='https://github.com/dimdenGD/OldTwitter/issues'>"
-                            )
-                            .replace(/\$AT2\$/g, "</a>")
-                            .replace(
-                                "$AT3$",
-                                "<a target='_blank' href='mailto:admin@dimden.dev'>"
-                            )}
+                    .replace(
+                        "$AT1$",
+                        "<a target='_blank' href='https://github.com/dimdenGD/OldTwitter/issues'>"
+                    )
+                    .replace(/\$AT2\$/g, "</a>")
+                    .replace(
+                        "$AT3$",
+                        "<a target='_blank' href='mailto:admin@dimden.dev'>"
+                    )}
                     </span>
                     <div class="box" style="font-family:monospace;line-break: anywhere;padding:5px;margin-top:5px;background:rgba(255, 0, 0, 0.1);color:#ff4545">
                         ${escapeHTML(
-                            e.stack ? e.stack : String(e)
-                        )} (OldTwitter v${chrome.runtime.getManifest().version})
+                        e.stack ? e.stack : String(e)
+                    )} (OldTwitter v${chrome.runtime.getManifest().version})
                     </div>
                 </div>
             `);
