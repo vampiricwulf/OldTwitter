@@ -1352,6 +1352,7 @@ function makeSeeableColor(color, bg_color = getBackgroundColor()) {
 }
 
 async function getLinkColors(ids) {
+    return [];
     if (typeof ids === "string") ids = ids.split(",");
     ids = [...new Set(ids)];
     const colours = await Promise.all([
