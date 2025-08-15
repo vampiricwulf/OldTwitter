@@ -124,7 +124,7 @@ async function updateReplies(id, c) {
     if(!c) document.getElementById('timeline').innerHTML = '';
     let tl, tweetLikers;
     try {
-        let [tlData, tweetLikersData] = await Promise.allSettled([API.tweet.getRepliesV2(id, c), API.tweet.getLikers(id)]);
+        let [tlData, tweetLikersData] = await Promise.allSettled([API.tweet.getRepliesV2(id, c), API.tweet.getLikers(id, undefined, 10, false)]);
         if(!tlData.value) {
             cursor = undefined;
             console.error(tlData.reason);
@@ -764,15 +764,20 @@ document.addEventListener('findActiveTweet', () => {
         activeTweet.classList.remove('tweet-active');
     }
     let scrollPoint = scrollY + innerHeight/2;
-    activeTweet = tweets.find(t => scrollPoint > t.offsetTop && scrollPoint < t.offsetTop + t.offsetHeight);
+    activeTweet = tweets.find(t => scrollPoint > t.offsetTop && scrollPoint < t.offsetTop + t.scrollHeight);
     if(activeTweet) {
         activeTweet.classList.add('tweet-active');
     }
 });
 
-setTimeout(async () => {
-    if(!vars) {
-        await loadVars();
+let loadIndex = 0;
+async function loadPage() {
+    if(typeof vars === 'undefined') {
+        loadIndex++;
+        if(loadIndex > 20) {
+            return setTimeout(() => location.reload(), 500);
+        }
+        return setTimeout(loadPage, 100);
     }
     if(/^\/i\/web\/status\/(\d{5,32})(|\/)$/.test(realPath)) {
         let id = realPath.split("/i/web/status/")[1];
@@ -814,7 +819,7 @@ setTimeout(async () => {
 
     document.addEventListener('scroll', async () => {
         // loading new tweets
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 700) {
+        if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight - 700) {
             if (loadingNewTweets) return;
             if(cursor) {
                 loadingNewTweets = true;
@@ -909,4 +914,6 @@ setTimeout(async () => {
     setInterval(updateUserData, 60000 * 3);
     setInterval(() => renderDiscovery(false), 60000 * 10);
     setInterval(renderTrends, 60000 * 5);
-}, 50);
+}
+
+setTimeout(loadPage, 100);

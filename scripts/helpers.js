@@ -5284,7 +5284,7 @@ async function appendTweet(t, timelineContainer, options = {}) {
                             "x-csrf-token": OLDTWITTER_CONFIG.csrf,
                             "x-twitter-auth-type": "OAuth2Session",
                         },
-                        body: `feedback_type=${feedback.feedbackType}&feedback_metadata=${t.feedbackMetadata}&undo=false`,
+                        body: `feedback_type=${feedback.feedbackType}${t.feedbackMetadata ? `&feedback_metadata=${t.feedbackMetadata}` : ""}&undo=false`,
                         credentials: "include",
                     })
                         .then((i) => i.json())
@@ -5664,7 +5664,7 @@ function renderNotification(n, options = {}) {
                         },
                         method: "post",
                         credentials: "include",
-                        body: `feedback_type=${n.feedback.feedbackType}&feedback_metadata=${n.feedback.metadata}&undo=false`,
+                        body: `feedback_type=${n.feedback.feedbackType}${n.feedback.metadata ? `&feedback_metadata=${n.feedback.metadata}` : ""}&undo=false`,
                     }
                 )
                     .then((i) => i.text())

@@ -3627,7 +3627,7 @@ const API = {
                     }`,
                     {
                         headers: {
-                            authorization: OLDTWITTER_CONFIG.oauth_key,
+                            authorization: OLDTWITTER_CONFIG.public_token,
                             "x-csrf-token": OLDTWITTER_CONFIG.csrf,
                             "x-twitter-auth-type": "OAuth2Session",
                             "content-type":
@@ -3664,7 +3664,7 @@ const API = {
                     }`,
                     {
                         headers: {
-                            authorization: OLDTWITTER_CONFIG.oauth_key,
+                            authorization: OLDTWITTER_CONFIG.public_token,
                             "x-csrf-token": OLDTWITTER_CONFIG.csrf,
                             "x-twitter-auth-type": "OAuth2Session",
                             "content-type":
@@ -5377,6 +5377,16 @@ const API = {
                                     e.entryId.startsWith("cursor-bottom-")
                                 ).content.itemContent.value;
                             } catch (e) {}
+                            try {
+                                newCursor = entries.find((e) =>
+                                    e.entryId.startsWith("cursor-bottom-")
+                                ).content.value;
+                            } catch (e) {}
+                            
+                            let terminator = data.data.threaded_conversation_with_injections_v2.instructions.find(i => i.type === 'TimelineTerminateTimeline' && i.direction === 'Bottom');
+                            if(terminator) {
+                                newCursor = null;
+                            }
 
                             for (let i = 0; i < entries.length; i++) {
                                 let e = entries[i];
@@ -5825,6 +5835,14 @@ const API = {
                                         l[1]("Not logged in")
                                     );
                                     delete loadingLikers[id];
+                                    d.tweetLikers[id] = {
+                                        date: Date.now(),
+                                        data: { list: [], cursor: undefined },
+                                    };
+                                    chrome.storage.local.set(
+                                        { tweetLikers: d.tweetLikers },
+                                        () => {}
+                                    );
                                 }
                                 return reject("Not logged in");
                             }
@@ -5834,6 +5852,14 @@ const API = {
                                         l[1](data.errors[0].message)
                                     );
                                     delete loadingLikers[id];
+                                    d.tweetLikers[id] = {
+                                        date: Date.now(),
+                                        data: { list: [], cursor: undefined },
+                                    };
+                                    chrome.storage.local.set(
+                                        { tweetLikers: d.tweetLikers },
+                                        () => {}
+                                    );
                                 }
                                 return reject(data.errors[0].message);
                             }
@@ -5847,6 +5873,14 @@ const API = {
                                         l[0]({ list: [], cursor: undefined })
                                     );
                                     delete loadingLikers[id];
+                                    d.tweetLikers[id] = {
+                                        date: Date.now(),
+                                        data: { list: [], cursor: undefined },
+                                    };
+                                    chrome.storage.local.set(
+                                        { tweetLikers: d.tweetLikers },
+                                        () => {}
+                                    );
                                 }
                                 debugLog("tweet.getLikers", "end", id, {
                                     list: [],
@@ -5884,9 +5918,11 @@ const API = {
                             debugLog("tweet.getLikers", "end", id, rdata);
                             resolve(rdata);
                             if (!cursor) {
-                                loadingLikers[id].listeners.forEach((l) =>
-                                    l[0](rdata)
-                                );
+                                if(loadingLikers[id]) {
+                                    loadingLikers[id].listeners.forEach((l) =>
+                                        l[0](rdata)
+                                    );
+                                }
                                 delete loadingLikers[id];
                                 d.tweetLikers[id] = {
                                     date: Date.now(),
@@ -5899,6 +5935,7 @@ const API = {
                             }
                         })
                         .catch((e) => {
+                            console.log('getLikers error', e);
                             if (!cursor) {
                                 loadingLikers[id].listeners.forEach((l) =>
                                     l[1](e)
