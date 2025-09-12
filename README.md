@@ -142,6 +142,7 @@ Active tweet hotkeys. On bottom-right of tweet element there's blue dot showing 
 `L` - (un)favorite/like tweet.  
 `B` - (un)bookmark tweet.  
 `T` - (un)retweet tweet.  
+`K` - (un)block tweet author
 `R` - open reply box.  
 `Q` - open quote box.  
 `C` - copy tweet image.  
@@ -188,6 +189,6 @@ Czech - [Menal](https://github.com/Menal226)
 German - [basti564](https://twitter.com/basti564)  
 Catalan - [elmees21](https://twitter.com/elmees21), [Luna](https://twitter.com/chica_botella)  
 Swedish - [actuallyaridan](https://twitter.com/actuallyaridan)  
-Bulgarian - [Scarlett7447](https://twitter.com/Scarlett7447)  
+Bulgarian - [saraaa7447](https://twitter.com/saraaa7447)  
 Norwegian - [twistquest](https://twitter.com/twistquest)  
 Indonesian - [lorizade](https://twitter.com/lorizade), [Feerse_](https://twitter.com/Feerse_), [DaGamerFiles](https://twitter.com/DaGamerFiles), [KuchingNeko](https://twitter.com/KuchingNeko)  

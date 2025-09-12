@@ -274,6 +274,7 @@ function parseTweet(res) {
             }
         }
         tweet.retweeted_status = result.legacy;
+        tweet.retweeted_status.retweeted_id_str = tweet.id_str;
         if (tweet.retweeted_status && result.core.user_results.result.legacy) {
             tweet.retweeted_status.user =
                 result.core.user_results.result.legacy;
@@ -4379,8 +4380,7 @@ const API = {
                     {
                         method: "POST",
                         headers: {
-                            authorization:
-                                "Bearer AAAAAAAAAAAAAAAAAAAAAPYXBAAAAAAACLXUNDekMxqa8h%2F40K4moUkGsoc%3DTYfbDKbT3jJPCEVnMYqilB28NHfOPqkca3qaAxGfsyKCs0wRbw",
+                            authorization: OLDTWITTER_CONFIG.public_token,
                             "x-csrf-token": OLDTWITTER_CONFIG.csrf,
                             "x-twitter-auth-type": "OAuth2Session",
                             "content-type": "application/json; charset=utf-8",

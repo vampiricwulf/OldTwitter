@@ -141,6 +141,7 @@ async function loadVars() {
                 "transitionProfileBanner",
                 "customDownloadTemplate",
                 "showBoringIndicators",
+                "useRetweetedId",
             ],
             (data) => {
                 // default variables
@@ -295,10 +296,10 @@ async function loadVars() {
                     );
                 }
                 if (typeof data.enableIframeNavigation !== "boolean") {
-                    data.enableIframeNavigation = window.innerWidth < 590;
+                    data.enableIframeNavigation = true;
                     chrome.storage.sync.set(
                         {
-                            enableIframeNavigation: window.innerWidth < 590,
+                            enableIframeNavigation: true,
                         },
                         () => {}
                     );
