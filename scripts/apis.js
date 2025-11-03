@@ -555,7 +555,7 @@ const API = {
                         `https://api.${location.hostname}/1.1/account/verify_credentials.json`,
                         {
                             headers: {
-                                authorization: OLDTWITTER_CONFIG.oauth_key,
+                                authorization: OLDTWITTER_CONFIG.public_token,
                                 "x-csrf-token": OLDTWITTER_CONFIG.csrf,
                                 "x-twitter-auth-type": "OAuth2Session",
                             },
@@ -1288,14 +1288,9 @@ const API = {
                             count,
                             data,
                         });
-                        if (data.errors && data.errors[0]) {
-                            return reject(data.errors[0].message);
-                        }
                         let instructions =
                             data.data.home.home_timeline_urt.instructions;
-                        let entries = instructions.find(
-                            (i) => i.type === "TimelineAddEntries"
-                        );
+                        let entries = instructions.find(i => i.type === "TimelineAddEntries");
                         if (!entries) {
                             debugLog("timeline.getAlgorithmicalV2", "end", {
                                 list: [],
@@ -2607,6 +2602,11 @@ const API = {
                                 data.data.user.result.unavailable_message.text
                             );
                         }
+                        if (data.data.user.result.message) {
+                            return reject(
+                                data.data.user.result.message
+                            );
+                        }
 
                         let result = data.data.user.result;
                         result.legacy.id_str = result.rest_id;
@@ -2629,6 +2629,9 @@ const API = {
                             !result.legacy.verified_type
                         ) {
                             result.legacy.verified_type = "Blue";
+                        }
+                        if (!result.legacy.protected) { //can be undefined
+                            result.legacy.protected = false;
                         }
 
                         debugLog("user.getV2", "end", result.legacy);
