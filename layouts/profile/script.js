@@ -134,6 +134,21 @@ function updateSelection() {
             activeNavs[i].classList.remove('tweet-nav-active');
         }
     }
+    const timeline = document.getElementById('timeline');
+
+    if(subpage === 'media' && vars.newGallery) {
+        timeline.style.backgroundColor = 'var(--background-color)';
+        timeline.style.borderLeft = '1px solid var(--border)';
+        timeline.style.borderRight = '1px solid var(--border)';
+        timeline.style.borderBottom = '1px solid var(--border)';
+        timeline.style.textAlign = 'center';
+    } else {
+        timeline.style.backgroundColor = '';
+        timeline.style.borderLeft = '';
+        timeline.style.borderRight = '';
+        timeline.style.borderBottom = '';
+        timeline.style.textAlign = '';
+    }
 
     if(subpage === "profile") {
         document.getElementById('tweet-nav').hidden = false;
@@ -1890,56 +1905,78 @@ async function renderProfile() {
 async function renderTimeline(append = false, sliceAmount = 0) {
     let timelineContainer = document.getElementById('timeline');
     if(!append) timelineContainer.innerHTML = '';
-    let data = timeline.data.slice(sliceAmount, timeline.data.length);;
-    if(pinnedTweet && subpage === "profile" && !append) await appendTweet(pinnedTweet, timelineContainer, {
-        top: {
-            text: LOC.pinned_tweet.message,
-            icon: "\uf003",
-            color: "var(--link-color)",
-            class: 'pinned'
-        },
-        bigFont: false
-    })
-    for(let i in data) {
-        let t = data[i];
-        if(!t) continue;
-        if(pinnedTweet && t.id_str === pinnedTweet.id_str) continue;
-        if (t.retweeted_status) {
-            if(pageUser.id_str === user.id_str) t.retweeted_status.current_user_retweet = t;
-            await appendTweet(t.retweeted_status, timelineContainer, {
-                top: {
-                    text: html`<a href="/${t.user.screen_name}">${t.user.name}</a> ${LOC.retweeted.message}`,
-                    icon: "\uf006",
-                    color: "#77b255",
-                    class: 'retweet-label'
-                }
+    let data = timeline.data.slice(sliceAmount, timeline.data.length);
+    if(subpage === 'media' && vars.newGallery) {
+        for(let i in data) {
+            let t = data[i];
+            let firstMedia = t.extended_entities.media[0];
+            if(!firstMedia) continue;
+            let mediaUrl = firstMedia.media_url_https;
+            let el = document.createElement('div');
+            el.classList.add('profile-media-item');
+            el.innerHTML = html`
+                <a href="/${pageUser.screen_name}/status/${t.id_str}" target="_blank">
+                    <img src="${mediaUrl}" alt="${firstMedia.ext_alt_text}">
+                </a>
+            `;
+            let a = el.getElementsByTagName('a')[0];
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                new TweetViewer(user, t);
             });
-        } else {
-            if (t.self_thread) {
-                let selfThreadTweet = timeline.data.find(tweet => tweet.id_str === t.self_thread.id_str);
-                if (selfThreadTweet && selfThreadTweet.id_str !== t.id_str && seenThreads.indexOf(selfThreadTweet.id_str) === -1) {
-                    await appendTweet(selfThreadTweet, timelineContainer, {
-                        selfThreadContinuation: true,
-                        bigFont: selfThreadTweet.favorite_count > averageLikeCount*1.2 && selfThreadTweet.favorite_count > 3 && (!selfThreadTweet.full_text || selfThreadTweet.full_text.length < 250)
-                    });
-                    await appendTweet(t, timelineContainer, {
-                        noTop: true,
-                        bigFont: t.favorite_count > averageLikeCount*1.2 && t.favorite_count > 3 && (!t.full_text || t.full_text.length < 250)
-                    });
-                    seenThreads.push(selfThreadTweet.id_str);
+            timelineContainer.appendChild(el);
+        }
+    } else {
+        if(pinnedTweet && subpage === "profile" && !append) await appendTweet(pinnedTweet, timelineContainer, {
+            top: {
+                text: LOC.pinned_tweet.message,
+                icon: "\uf003",
+                color: "var(--link-color)",
+                class: 'pinned'
+            },
+            bigFont: false
+        })
+        for(let i in data) {
+            let t = data[i];
+            if(!t) continue;
+            if(pinnedTweet && t.id_str === pinnedTweet.id_str) continue;
+            if (t.retweeted_status) {
+                if(pageUser.id_str === user.id_str) t.retweeted_status.current_user_retweet = t;
+                await appendTweet(t.retweeted_status, timelineContainer, {
+                    top: {
+                        text: html`<a href="/${t.user.screen_name}">${t.user.name}</a> ${LOC.retweeted.message}`,
+                        icon: "\uf006",
+                        color: "#77b255",
+                        class: 'retweet-label'
+                    }
+                });
+            } else {
+                if (t.self_thread) {
+                    let selfThreadTweet = timeline.data.find(tweet => tweet.id_str === t.self_thread.id_str);
+                    if (selfThreadTweet && selfThreadTweet.id_str !== t.id_str && seenThreads.indexOf(selfThreadTweet.id_str) === -1) {
+                        await appendTweet(selfThreadTweet, timelineContainer, {
+                            selfThreadContinuation: true,
+                            bigFont: selfThreadTweet.favorite_count > averageLikeCount*1.2 && selfThreadTweet.favorite_count > 3 && (!selfThreadTweet.full_text || selfThreadTweet.full_text.length < 250)
+                        });
+                        await appendTweet(t, timelineContainer, {
+                            noTop: true,
+                            bigFont: t.favorite_count > averageLikeCount*1.2 && t.favorite_count > 3 && (!t.full_text || t.full_text.length < 250)
+                        });
+                        seenThreads.push(selfThreadTweet.id_str);
+                    } else {
+                        await appendTweet(t, timelineContainer, {
+                            selfThreadButton: true,
+                            bigFont: t.favorite_count > averageLikeCount*1.2 && t.favorite_count > 3 && (!t.full_text || t.full_text.length < 250)
+                        });
+                    }
                 } else {
                     await appendTweet(t, timelineContainer, {
-                        selfThreadButton: true,
                         bigFont: t.favorite_count > averageLikeCount*1.2 && t.favorite_count > 3 && (!t.full_text || t.full_text.length < 250)
                     });
                 }
-            } else {
-                await appendTweet(t, timelineContainer, {
-                    bigFont: t.favorite_count > averageLikeCount*1.2 && t.favorite_count > 3 && (!t.full_text || t.full_text.length < 250)
-                });
             }
-        }
-    };
+        };
+    }
     document.getElementById('loading-box').hidden = true;
     loadingNewTweets = false;
     return true;
@@ -2091,7 +2128,7 @@ function getCountryFlag(country) {
             emoji: '🇧🇲'
         },
         {
-            name: 'Brunei',
+            name: 'Brunei Darussalam',
             code: 'BN',
             emoji: '🇧🇳'
         },
@@ -2141,7 +2178,7 @@ function getCountryFlag(country) {
             emoji: '🇨🇨'
         },
         {
-            name: 'Congo - Kinshasa',
+            name: 'Congo',
             code: 'CD',
             emoji: '🇨🇩'
         },
@@ -2151,7 +2188,7 @@ function getCountryFlag(country) {
             emoji: '🇨🇫'
         },
         {
-            name: 'Congo - Brazzaville',
+            name: 'Republic of the Congo',
             code: 'CG',
             emoji: '🇨🇬'
         },
@@ -2161,7 +2198,7 @@ function getCountryFlag(country) {
             emoji: '🇨🇭'
         },
         {
-            name: 'Côte d’Ivoire',
+            name: 'Côte d\'Ivoire',
             code: 'CI',
             emoji: '🇨🇮'
         },
@@ -2199,6 +2236,11 @@ function getCountryFlag(country) {
             name: 'Cuba',
             code: 'CU',
             emoji: '🇨🇺'
+        },
+        {
+            name: 'Curaçao',
+            code: 'CW',
+            emoji: '🇨🇼'
         },
         {
             name: 'Cape Verde',
@@ -2406,7 +2448,7 @@ function getCountryFlag(country) {
             emoji: '🇬🇾'
         },
         {
-            name: 'Hong Kong SAR China',
+            name: 'Hong Kong',
             code: 'HK',
             emoji: '🇭🇰'
         },
@@ -2506,6 +2548,11 @@ function getCountryFlag(country) {
             emoji: '🇰🇪'
         },
         {
+            name: 'Kosovo',
+            code: 'XK',
+            emoji: '🇽🇰'
+        },
+        {
             name: 'Kyrgyzstan',
             code: 'KG',
             emoji: '🇰🇬'
@@ -2536,7 +2583,7 @@ function getCountryFlag(country) {
             emoji: '🇰🇵'
         },
         {
-            name: 'Korea',
+            name: 'South Korea',
             code: 'KR',
             emoji: '🇰🇷'
         },
@@ -2646,7 +2693,7 @@ function getCountryFlag(country) {
             emoji: '🇲🇭'
         },
         {
-            name: 'North Macedonia',
+            name: 'Macedonia',
             code: 'MK',
             emoji: '🇲🇰'
         },
@@ -2656,7 +2703,7 @@ function getCountryFlag(country) {
             emoji: '🇲🇱'
         },
         {
-            name: 'Myanmar (Burma)',
+            name: 'Myanmar',
             code: 'MM',
             emoji: '🇲🇲'
         },
@@ -2666,7 +2713,7 @@ function getCountryFlag(country) {
             emoji: '🇲🇳'
         },
         {
-            name: 'Macao SAR China',
+            name: 'Macao',
             code: 'MO',
             emoji: '🇲🇴'
         },
@@ -2986,7 +3033,7 @@ function getCountryFlag(country) {
             emoji: '🇸🇾'
         },
         {
-            name: 'Eswatini',
+            name: 'Swaziland',
             code: 'SZ',
             emoji: '🇸🇿'
         },
