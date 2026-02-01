@@ -1916,7 +1916,7 @@ async function renderTimeline(append = false, sliceAmount = 0) {
             el.classList.add('profile-media-item');
             el.innerHTML = html`
                 <a href="/${pageUser.screen_name}/status/${t.id_str}" target="_blank">
-                    <img src="${mediaUrl}" alt="${firstMedia.ext_alt_text}">
+                    <img src="${mediaUrl}" alt="${escapeHTML(firstMedia.ext_alt_text)}">
                 </a>
             `;
             let a = el.getElementsByTagName('a')[0];
@@ -2118,7 +2118,7 @@ function getCountryFlag(country) {
             emoji: '🇧🇯'
         },
         {
-            name: 'St. Barthélemy',
+            name: 'Saint Barthélemy',
             code: 'BL',
             emoji: '🇧🇱'
         },
@@ -2573,7 +2573,7 @@ function getCountryFlag(country) {
             emoji: '🇰🇲'
         },
         {
-            name: 'St. Kitts and Nevis',
+            name: 'Saint Kitts and Nevis',
             code: 'KN',
             emoji: '🇰🇳'
         },
@@ -2613,7 +2613,7 @@ function getCountryFlag(country) {
             emoji: '🇱🇧'
         },
         {
-            name: 'St. Lucia',
+            name: 'Saint Lucia',
             code: 'LC',
             emoji: '🇱🇨'
         },
@@ -2678,7 +2678,7 @@ function getCountryFlag(country) {
             emoji: '🇲🇪'
         },
         {
-            name: 'St. Martin',
+            name: 'Saint Martin',
             code: 'MF',
             emoji: '🇲🇫'
         },
@@ -2873,7 +2873,7 @@ function getCountryFlag(country) {
             emoji: '🇵🇱'
         },
         {
-            name: 'St. Pierre and Miquelon',
+            name: 'Saint Pierre and Miquelon',
             code: 'PM',
             emoji: '🇵🇲'
         },
@@ -2968,7 +2968,7 @@ function getCountryFlag(country) {
             emoji: '🇸🇬'
         },
         {
-            name: 'St. Helena',
+            name: 'Saint Helena',
             code: 'SH',
             emoji: '🇸🇭'
         },
@@ -3143,7 +3143,7 @@ function getCountryFlag(country) {
             emoji: '🇻🇦'
         },
         {
-            name: 'St. Vincent and Grenadines',
+            name: 'Saint Vincent and Grenadines',
             code: 'VC',
             emoji: '🇻🇨'
         },
