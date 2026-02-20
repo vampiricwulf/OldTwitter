@@ -8160,7 +8160,7 @@ const API = {
                             if (data.errors && data.errors[0].code === 32) {
                                 return reject("Not logged in");
                             }
-                            if (data.errors && data.errors[0]) {
+                            if (!data.data.list && data.errors && data.errors[0]) {
                                 return reject(data.errors[0].message);
                             }
                             resolve(data.data.list);
@@ -8458,13 +8458,16 @@ const API = {
                             if (data.errors && data.errors[0].code === 32) {
                                 return reject("Not logged in");
                             }
-                            if (data.errors && data.errors[0]) {
-                                return reject(data.errors[0].message);
-                            }
                             chrome.storage.local.set(
                                 { listData: {} },
                                 () => {}
                             );
+                            if(!data?.data?.viewer?.list_management_timeline?.timeline?.instructions) {
+                                if(data.errors && data.errors[0]) {
+                                    return reject(data.errors[0].message);
+                                }
+                                return reject("No lists found");
+                            }
                             let out =
                                 data.data.viewer.list_management_timeline.timeline.instructions
                                     .find((i) => i.entries)
@@ -8477,6 +8480,10 @@ const API = {
                                         (i) => i.item.itemContent.list
                                     )
                                     .filter((i) => i);
+                            
+                            if (out.length === 0 && data.errors && data.errors[0]) {
+                                return reject(data.errors[0].message);
+                            }
                             resolve(out);
                             chrome.storage.local.set(
                                 { myLists: { date: Date.now(), data: out } },
