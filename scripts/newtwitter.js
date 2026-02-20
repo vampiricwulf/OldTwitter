@@ -75,6 +75,12 @@ setTimeout(() => {
                 header[role="banner"] {
                     display: none !important;
                 }
+                div[data-testid="BottomBar"] {
+                    display: none !important;
+                }
+                html {
+                    overflow-y: auto !important;
+                }
             }
         `;
         document.body.appendChild(style);
