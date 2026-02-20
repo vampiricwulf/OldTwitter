@@ -87,7 +87,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
 chrome.webRequest.onHeadersReceived.addListener(
     function (details) {
         const responseHeaders = details.responseHeaders.filter(
-            (h) => h.name.toLowerCase() !== "x-frame-options"
+            (h) => h.name.toLowerCase() !== "x-frame-options" && h.name.toLowerCase() !== "content-security-policy"
         );
         return { responseHeaders };
     },
