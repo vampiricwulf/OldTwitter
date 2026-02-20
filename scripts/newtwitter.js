@@ -68,12 +68,18 @@ setTimeout(() => {
         }, 500);
     }
 
-    if(realPath === '/i/chat') {
+    if(realPath === '/i/chat' || realPath.startsWith('/i/chat/')) {
         let style = document.createElement('style');
         style.innerHTML = `
             @media (max-width: 700px) {
                 header[role="banner"] {
                     display: none !important;
+                }
+                div[data-testid="BottomBar"] {
+                    display: none !important;
+                }
+                html {
+                    overflow-y: auto !important;
                 }
             }
         `;

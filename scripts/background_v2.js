@@ -84,6 +84,18 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
     },
     ["blocking", "requestHeaders"]
 );
+chrome.webRequest.onHeadersReceived.addListener(
+    function (details) {
+        const responseHeaders = details.responseHeaders.filter(
+            (h) => h.name.toLowerCase() !== "x-frame-options" && h.name.toLowerCase() !== "content-security-policy"
+        );
+        return { responseHeaders };
+    },
+    {
+        urls: ["*://*.twitter.com/*", "*://twitter.com/*", "*://*.x.com/*", "*://x.com/*"],
+    },
+    ["blocking", "responseHeaders"]
+);
 chrome.webRequest.onBeforeSendHeaders.addListener(
     //this isnt particularly elegant solution
     function (details) {
