@@ -68,7 +68,7 @@ setTimeout(() => {
         }, 500);
     }
 
-    if(realPath === '/i/chat') {
+    if(realPath === '/i/chat' || realPath.startsWith('/i/chat/')) {
         let style = document.createElement('style');
         style.innerHTML = `
             @media (max-width: 700px) {

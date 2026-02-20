@@ -1398,7 +1398,7 @@ let userDataFunction = async user => {
             modal = createModal(html`
                 <div class="inbox" style="height: 100%;">
                     <div class="xchat" style="height: 100%;">
-                        <iframe src="https://x.com/i/chat?newtwitter=true&if=1" style="width: 100%; height: 100%; border: none;"></iframe>
+                        <iframe id="xchat-iframe" src="https://x.com/i/chat?newtwitter=true&if=1" style="width: 100%; height: 100%; border: none;"></iframe>
                     </div>
                 </div>
             `, "inbox-modal", () => {
@@ -2598,6 +2598,10 @@ let userDataFunction = async user => {
     document.addEventListener('messageUser', e => {
         document.getElementById('messages').click();
         setTimeout(async () => {
+            if(vars.useXChat) {
+                document.getElementById('xchat-iframe').src = `https://x.com/i/chat/${e.detail.id}?newtwitter=true&if=1`;
+                return;
+            }
             let convo_id = e.detail.id;
             let u = e.detail.user;
             const messageHeaderName = modal.querySelector('.message-header-name');
