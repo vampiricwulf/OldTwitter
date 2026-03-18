@@ -652,5 +652,8 @@
     "show_based_in": { "message": "Tampilkan dari mana sebuah akun berbasis" },
     "based_in": { "message": "Berbasis in:" },
     "based_in_vpn": { "message": "(VPN)" },
-    "new_gallery": { "message": "Gunakan galeri baru untuk halaman media profil" }
+    "new_gallery": { "message": "Gunakan galeri baru untuk halaman media profil" },
+    "popular_from_follows": { "message": "Populer dari yang diikuti" },
+    "popular_from_follows_help": { "message": "Ini akan menampilkan tweet populer terkini hanya dari pengguna yang kamu ikuti." },
+    "use_x_chat": { "message": "Gunakan Obrolan X, bukan DM OldTwitter." }
 }
